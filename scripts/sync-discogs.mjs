@@ -19,9 +19,13 @@ const args = process.argv.slice(2);
 const LIMIT = args.includes('--limit') ? Number(args[args.indexOf('--limit') + 1]) : Infinity;
 const DRY = args.includes('--dry');
 
+// Sur GitHub Actions, « ::error:: » fait remonter le message dans les annotations du résumé.
+const fail = (msg) => { console.log(`::error::${msg}`); process.exit(1); };
+
 const { DISCOGS_KEY, DISCOGS_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = process.env;
-if (!DISCOGS_KEY || !DISCOGS_SECRET) throw new Error('DISCOGS_KEY et DISCOGS_SECRET sont requis.');
-if (!DRY && (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY)) throw new Error('SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY sont requis.');
+const missing = ['DISCOGS_KEY', 'DISCOGS_SECRET', ...(DRY ? [] : ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'])].filter(k => !process.env[k]);
+if (missing.length) fail(`Secret(s) manquant(s) ou vide(s) : ${missing.join(', ')}. À ajouter dans Settings > Secrets and variables > Actions.`);
+if (!DRY && !/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(SUPABASE_URL.trim())) fail('SUPABASE_URL doit être de la forme https://xxxx.supabase.co (Project URL, sans /rest/v1 ni autre chemin).');
 
 const UA = 'CartonPlein/1.0 +https://github.com';
 const DISCOGS_FMT = { v: 'Vinyl', c: 'CD', k: 'Cassette', e: '8-Track Cartridge' };
@@ -118,9 +122,20 @@ async function main() {
   const supabase = DRY ? null : createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } });
 
   const existing = new Map();
+  // Test de la clé Discogs avant de lancer 25 minutes de travail
+  try { await discogs('/masters/24047'); }
+  catch (e) { fail(`Discogs refuse la connexion (${e.message}). Vérifie DISCOGS_KEY et DISCOGS_SECRET (Consumer Key et Consumer Secret de ton application Discogs).`); }
+
   if (supabase) {
     const { data, error } = await supabase.from('releases').select('*');
-    if (error) throw error;
+    if (error) {
+      const hint = /relation|does not exist|schema cache/i.test(error.message)
+        ? 'La table « releases » est introuvable : exécute supabase/migrations/001_init.sql dans Supabase > SQL Editor.'
+        : /JWT|apikey|Invalid API key|401|403/i.test(error.message)
+          ? 'Clé Supabase refusée : SUPABASE_SERVICE_ROLE_KEY doit être la clé « service_role » (Project Settings > API), pas la clé « anon ».'
+          : 'Supabase refuse la lecture.';
+      fail(`${hint} Détail : ${error.message}`);
+    }
     data.forEach(r => existing.set(Number(r.master_id), r));
   }
 
@@ -162,4 +177,4 @@ async function main() {
   if (failed > seeds.length / 2) process.exit(1);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => { console.error(e); fail(`Synchronisation interrompue : ${e.message || e}`); });
