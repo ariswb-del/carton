@@ -1,0 +1,1086 @@
+[
+ {
+  "master_id": 24047,
+  "query": [
+   "The Beatles",
+   "Abbey Road"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 8883,
+  "query": [
+   "Michael Jackson",
+   "Thriller"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 38722,
+  "query": [
+   "Fleetwood Mac",
+   "Rumours"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 66631,
+  "query": [
+   "Marvin Gaye",
+   "What's Going On"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 5460,
+  "query": [
+   "Miles Davis",
+   "Kind Of Blue"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 26647,
+  "query": [
+   "Daft Punk",
+   "Discovery"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 26629,
+  "query": [
+   "Daft Punk",
+   "Homework"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 21491,
+  "query": [
+   "Radiohead",
+   "OK Computer"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 1561,
+  "query": [
+   "David Bowie",
+   "The Rise And Fall Of Ziggy Stardust"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 23828,
+  "query": [
+   "The Rolling Stones",
+   "Sticky Fingers"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 810214,
+  "query": [
+   "Kendrick Lamar",
+   "To Pimp A Butterfly"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 288153,
+  "query": [
+   "Kanye West",
+   "My Beautiful Dark Twisted Fantasy"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 20148,
+  "query": [
+   "Nas",
+   "Illmatic"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 45922,
+  "query": [
+   "A Tribe Called Quest",
+   "The Low End Theory"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 5542,
+  "query": [
+   "Portishead",
+   "Dummy"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 1622,
+  "query": [
+   "Air",
+   "Moon Safari"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 9382,
+  "query": [
+   "Serge Gainsbourg",
+   "Histoire De Melody Nelson"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 97496,
+  "query": [
+   "IAM",
+   "L'École Du Micro D'Argent"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 46569,
+  "query": [
+   "MC Solaar",
+   "Prose Combat"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 586635,
+  "query": [
+   "Stromae",
+   "Racine Carrée"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 706804,
+  "query": [
+   "Christine And The Queens",
+   "Chaleur Humaine"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 112796,
+  "query": [
+   "Phoenix",
+   "Wolfgang Amadeus Phoenix"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 12347,
+  "query": [
+   "The Strokes",
+   "Is This It"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 593987,
+  "query": [
+   "Arctic Monkeys",
+   "AM"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 992029,
+  "query": [
+   "Beyoncé",
+   "Lemonade"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 1046042,
+  "query": [
+   "Frank Ocean",
+   "Blonde"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 861083,
+  "query": [
+   "Tame Impala",
+   "Currents"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 47744,
+  "query": [
+   "Joni Mitchell",
+   "Blue"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 126717,
+  "query": [
+   "Curtis Mayfield",
+   "Super Fly"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 92896,
+  "query": [
+   "Bill Withers",
+   "Still Bill"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 52968,
+  "query": [
+   "Isaac Hayes",
+   "Hot Buttered Soul"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 53087,
+  "query": [
+   "Chic",
+   "C'est Chic"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 99532,
+  "query": [
+   "Earth, Wind & Fire",
+   "That's The Way Of The World"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 19493,
+  "query": [
+   "Herbie Hancock",
+   "Head Hunters"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 122277,
+  "query": [
+   "Nina Simone",
+   "Pastel Blues"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 5649,
+  "query": [
+   "ABBA",
+   "Arrival"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 5863,
+  "query": [
+   "Queen",
+   "A Night At The Opera"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 8471,
+  "query": [
+   "AC/DC",
+   "Back In Black"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 33951,
+  "query": [
+   "Dr. Dre",
+   "The Chronic"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 57970,
+  "query": [
+   "The Notorious B.I.G.",
+   "Ready To Die"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 25976,
+  "query": [
+   "OutKast",
+   "Aquemini"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 2815,
+  "query": [
+   "Björk",
+   "Homogenic"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 8435,
+  "query": [
+   "Madonna",
+   "Like A Prayer"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 25688,
+  "query": [
+   "Talking Heads",
+   "Remain In Light"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 4805,
+  "query": [
+   "Joy Division",
+   "Unknown Pleasures"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 31755,
+  "query": [
+   "The Cure",
+   "Disintegration"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 31598,
+  "query": [
+   "Santana",
+   "Abraxas"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 30577,
+  "query": [
+   "Elton John",
+   "Goodbye Yellow Brick Road"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 10362,
+  "query": [
+   "Pink Floyd",
+   "The Dark Side Of The Moon"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 87440,
+  "query": [
+   "Stevie Wonder",
+   "Songs In The Key Of Life"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 13814,
+  "query": [
+   "Nirvana",
+   "Nevermind"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 16245,
+  "query": [
+   "Prince",
+   "Purple Rain"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 4300,
+  "query": [
+   "Led Zeppelin",
+   "Led Zeppelin IV"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 65858,
+  "query": [
+   "Bob Marley & The Wailers",
+   "Exodus"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 51256,
+  "query": [
+   "Amy Winehouse",
+   "Back To Black"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 57279,
+  "query": [
+   "Lauryn Hill",
+   "The Miseducation Of Lauryn Hill"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 23683,
+  "query": [
+   "Massive Attack",
+   "Mezzanine"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 35065,
+  "query": [
+   "Justice",
+   "Cross"
+  ],
+  "gem": false,
+  "title": "†"
+ },
+ {
+  "master_id": 43980,
+  "query": [
+   "Jean-Michel Jarre",
+   "Oxygène"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 58002,
+  "query": [
+   "Gorillaz",
+   "Demon Days"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 3986,
+  "query": [
+   "Bob Dylan",
+   "Highway 61 Revisited"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 35276,
+  "query": [
+   "The Velvet Underground",
+   "The Velvet Underground & Nico"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 122933,
+  "query": [
+   "Aretha Franklin",
+   "I Never Loved A Man The Way I Love You"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 141257,
+  "query": [
+   "Al Green",
+   "Let's Stay Together"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 25893,
+  "query": [
+   "Donna Summer",
+   "Bad Girls"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 32287,
+  "query": [
+   "John Coltrane",
+   "A Love Supreme"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 23443,
+  "query": [
+   "Bee Gees",
+   "Saturday Night Fever"
+  ],
+  "gem": false,
+  "artist": "Bee Gees & divers",
+  "title": "Saturday Night Fever"
+ },
+ {
+  "master_id": 6495,
+  "query": [
+   "Metallica",
+   "Master Of Puppets"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 51607,
+  "query": [
+   "Whitney Houston",
+   "Whitney Houston"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 19382,
+  "query": [
+   "The Clash",
+   "London Calling"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 113995,
+  "query": [
+   "Fela Kuti",
+   "Zombie"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 64210,
+  "query": [
+   "Buena Vista Social Club",
+   "Buena Vista Social Club"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 27765,
+  "query": [
+   "Simon & Garfunkel",
+   "Bridge Over Troubled Water"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 104166,
+  "query": [
+   "Carole King",
+   "Tapestry"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 2877,
+  "query": [
+   "Kraftwerk",
+   "Trans-Europe Express"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 556257,
+  "query": [
+   "Daft Punk",
+   "Random Access Memories"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 1524311,
+  "query": [
+   "Billie Eilish",
+   "When We All Fall Asleep, Where Do We Go?"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 3287971,
+  "query": [
+   "Taylor Swift",
+   "1989"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 303567,
+  "query": [
+   "Adele",
+   "21"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 43936,
+  "query": [
+   "Sade",
+   "Diamond Life"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 151766,
+  "query": [
+   "D'Angelo",
+   "Voodoo"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 43655,
+  "query": [
+   "Erykah Badu",
+   "Baduizm"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 17217,
+  "query": [
+   "The Beach Boys",
+   "Pet Sounds"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 24535,
+  "query": [
+   "The Jimi Hendrix Experience",
+   "Electric Ladyland"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 22181,
+  "query": [
+   "Alain Bashung",
+   "Osez Joséphine"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 11698,
+  "query": [
+   "Téléphone",
+   "Crache Ton Venin"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 248193,
+  "query": [
+   "Françoise Hardy",
+   "Tous Les Garçons Et Les Filles"
+  ],
+  "gem": false,
+  "title": "Tous les garçons et les filles"
+ },
+ {
+  "master_id": 9567,
+  "query": [
+   "Jane Birkin & Serge Gainsbourg",
+   "Jane Birkin / Serge Gainsbourg"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 11477,
+  "query": [
+   "Cerrone",
+   "Supernature"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 5331,
+  "query": [
+   "Sébastien Tellier",
+   "Sexuality"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 1059336,
+  "query": [
+   "PNL",
+   "Dans La Légende"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 28680,
+  "query": [
+   "Kate Bush",
+   "Hounds Of Love"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 403952,
+  "query": [
+   "Lana Del Rey",
+   "Born To Die"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 12236,
+  "query": [
+   "Eminem",
+   "The Marshall Mathers LP"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 25303,
+  "query": [
+   "Wu-Tang Clan",
+   "Enter The Wu-Tang (36 Chambers)"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 20135,
+  "query": [
+   "Beastie Boys",
+   "Paul's Boutique"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 68208,
+  "query": [
+   "J Dilla",
+   "Donuts"
+  ],
+  "gem": false
+ },
+ {
+  "master_id": 176155,
+  "query": [
+   "Rodriguez",
+   "Cold Fact"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 54621,
+  "query": [
+   "Shuggie Otis",
+   "Inspiration Information"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 7849,
+  "query": [
+   "Gil Scott-Heron & Brian Jackson",
+   "Winter In America"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 171737,
+  "query": [
+   "Labi Siffre",
+   "Remember My Song"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 689812,
+  "query": [
+   "Lewis",
+   "L'Amour"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 48576,
+  "query": [
+   "Arthur Russell",
+   "World Of Echo"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 191504,
+  "query": [
+   "Sibylle Baier",
+   "Colour Green"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 36522,
+  "query": [
+   "Karen Dalton",
+   "In My Own Time"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 129395,
+  "query": [
+   "Linda Perhacs",
+   "Parallelograms"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 69629,
+  "query": [
+   "Vashti Bunyan",
+   "Just Another Diamond Day"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 299081,
+  "query": [
+   "Jim Sullivan",
+   "U.F.O."
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 319506,
+  "query": [
+   "The Lijadu Sisters",
+   "Horizon Unlimited"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 584654,
+  "query": [
+   "Gábor Szabó",
+   "Dreams"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 275993,
+  "query": [
+   "Lee Moses",
+   "Time And Place"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 133645,
+  "query": [
+   "Betty Davis",
+   "They Say I'm Different"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 54110,
+  "query": [
+   "Pharoah Sanders",
+   "Karma"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 59538,
+  "query": [
+   "Alice Coltrane",
+   "Journey In Satchidananda"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 182097,
+  "query": [
+   "Ahmad Jamal",
+   "The Awakening"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 164145,
+  "query": [
+   "Jean-Claude Vannier",
+   "L'Enfant Assassin Des Mouches"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 47689,
+  "query": [
+   "Brigitte Fontaine",
+   "Comme À La Radio"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 18050,
+  "query": [
+   "Mulatu Astatke",
+   "Mulatu Of Ethiopia"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 167268,
+  "query": [
+   "Marcos Valle",
+   "Previsão Do Tempo"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 158757,
+  "query": [
+   "Arthur Verocai",
+   "Arthur Verocai"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 167258,
+  "query": [
+   "Lô Borges & Milton Nascimento",
+   "Clube Da Esquina"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 74043,
+  "query": [
+   "Tim Maia",
+   "Racional Vol. 1"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 606606,
+  "query": [
+   "Mariya Takeuchi",
+   "Variety"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 351396,
+  "query": [
+   "Tatsuro Yamashita",
+   "For You"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 101736,
+  "query": [
+   "Minnie Riperton",
+   "Come To My Garden"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 99495,
+  "query": [
+   "Terry Callier",
+   "What Color Is Love"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 43997,
+  "query": [
+   "Eddie Hazel",
+   "Game, Dames And Guitar Thangs"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 221532,
+  "query": [
+   "Syl Johnson",
+   "Is It Because I'm Black"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 157872,
+  "query": [
+   "Bobbie Gentry",
+   "The Delta Sweete"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 86663,
+  "query": [
+   "Ramp",
+   "Come Into Knowledge"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 84158,
+  "query": [
+   "Cymande",
+   "Cymande"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 90939,
+  "query": [
+   "Lonnie Liston Smith & The Cosmic Echoes",
+   "Expansions"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 298895,
+  "query": [
+   "Ebo Taylor",
+   "Love And Death"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 118092,
+  "query": [
+   "Roy Ayers Ubiquity",
+   "Everybody Loves The Sunshine"
+  ],
+  "gem": true
+ },
+ {
+  "master_id": 117412,
+  "query": [
+   "Gal Costa",
+   "Gal Costa"
+  ],
+  "gem": true
+ }
+]

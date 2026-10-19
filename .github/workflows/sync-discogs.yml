@@ -1,0 +1,28 @@
+name: Synchroniser Discogs
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'   # toutes les 6 heures (règle de fraîcheur Discogs)
+  workflow_dispatch: {}       # bouton « Run workflow » pour un lancement manuel
+
+concurrency:
+  group: sync-discogs
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: node scripts/sync-discogs.mjs
+        env:
+          DISCOGS_KEY: ${{ secrets.DISCOGS_KEY }}
+          DISCOGS_SECRET: ${{ secrets.DISCOGS_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
