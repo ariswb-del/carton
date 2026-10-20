@@ -1,38 +1,43 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import MediaObject, { type MediaProps } from './MediaObject';
+import MediaObject, { DEFAULT_POSE, type MediaProps } from './MediaObject';
 
-/** Vue « en main » : on fait pivoter l'objet au doigt ou à la souris, on l'ouvre, on le retourne. */
-export default function ObjectStage(props: Omit<MediaProps, 'open' | 'flipped' | 'size'>) {
+/** L'objet « en main » : on le fait tourner librement au doigt ou à la souris, on l'ouvre, on le retourne. */
+export default function ObjectStage(props: Omit<MediaProps, 'open' | 'pose' | 'animate'>) {
+  const home = DEFAULT_POSE[props.format];
+  const [pose, setPose] = useState(home);
   const [open, setOpen] = useState(false);
-  const [flipped, setFlipped] = useState(false);
-  const [rot, setRot] = useState({ x: -6, y: 18 });
-  const drag = useRef<{ x: number; y: number; rx: number; ry: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
   const canOpen = props.format !== 'e';
   const openLabel = { v: open ? 'Rentrer le disque' : 'Sortir le disque', c: open ? 'Fermer le boîtier' : 'Ouvrir le boîtier', k: open ? 'Fermer le boîtier' : 'Ouvrir le boîtier', e: '' }[props.format];
 
   return (
     <div className="stage">
       <div
-        className="stage-scene"
-        onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, rx: rot.x, ry: rot.y }; (e.target as HTMLElement).setPointerCapture?.(e.pointerId); }}
+        className={`stage-scene ${dragging ? 'grabbing' : ''}`}
+        onPointerDown={e => {
+          drag.current = { x: e.clientX, y: e.clientY, px: pose.x, py: pose.y };
+          setDragging(true);
+          e.currentTarget.setPointerCapture(e.pointerId);
+        }}
         onPointerMove={e => {
           const d = drag.current; if (!d) return;
-          setRot({ x: Math.max(-25, Math.min(25, d.rx - (e.clientY - d.y) * 0.25)), y: Math.max(-45, Math.min(45, d.ry + (e.clientX - d.x) * 0.35)) });
+          setPose({ x: Math.max(-75, Math.min(75, d.px - (e.clientY - d.y) * 0.45)), y: d.py + (e.clientX - d.x) * 0.55 });
         }}
-        onPointerUp={() => { drag.current = null; }}
-        onPointerCancel={() => { drag.current = null; }}
+        onPointerUp={() => { drag.current = null; setDragging(false); }}
+        onPointerCancel={() => { drag.current = null; setDragging(false); }}
+        onDoubleClick={() => setPose(home)}
       >
-        <div className="stage-rot" style={{ transform: `rotateX(${rot.x}deg) rotateY(${rot.y}deg)` }}>
-          <MediaObject {...props} size="stage" open={open} flipped={flipped} />
-        </div>
+        <MediaObject {...props} pose={pose} open={open} animate={!dragging} />
       </div>
       <div className="row center">
-        {canOpen && <button type="button" className="btn small" onClick={() => { setOpen(o => !o); setFlipped(false); }}>{openLabel}</button>}
-        <button type="button" className="btn small ghost" onClick={() => { setFlipped(f => !f); setOpen(false); }}>{flipped ? 'Voir le recto' : 'Retourner'}</button>
+        {canOpen && <button type="button" className="btn small" onClick={() => { setOpen(o => !o); setPose(p => ({ x: home.x, y: Math.round((p.y - home.y) / 360) * 360 + home.y })); }}>{openLabel}</button>}
+        <button type="button" className="btn small ghost" onClick={() => { setOpen(false); setPose(p => ({ ...p, y: p.y + 180 })); }}>Retourner</button>
+        <button type="button" className="btn small ghost" onClick={() => { setOpen(false); setPose(home); }}>Recentrer</button>
       </div>
-      <p className="hint">Fais glisser pour tourner l&apos;objet.</p>
+      <p className="hint">Fais glisser pour tourner l&apos;objet dans tous les sens.</p>
     </div>
   );
 }

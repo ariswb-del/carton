@@ -57,14 +57,11 @@ function Cartons() {
               const r = releases.get(c.master_id); if (!r) return null;
               const done = flipped.has(i);
               return (
-                <button key={c.id} type="button" className={`flip rise ${done ? 'done' : ''}`} style={{ animationDelay: `${i * 90}ms` }}
-                  aria-label={done ? `${r.title}, ${r.artist}` : `Retourner le disque ${i + 1}`}
-                  onClick={() => done ? setDetail(c) : setFlipped(s => new Set(s).add(i))}>
-                  <div className="inner">
-                    <div className="back"><span>?</span></div>
-                    <div className="front"><CopyCard copy={c} release={r} /></div>
-                  </div>
-                </button>
+                <div key={c.id} className="reveal-slot">
+                  {done
+                    ? <div className="turn-in"><CopyCard copy={c} release={r} onClick={() => setDetail(c)} /></div>
+                    : <button type="button" className="kraft-back rise" style={{ animationDelay: `${i * 90}ms` }} aria-label={`Retourner le disque ${i + 1}`} onClick={() => setFlipped(s => new Set(s).add(i))}>?</button>}
+                </div>
               );
             })}
           </div>
