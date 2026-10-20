@@ -17,6 +17,18 @@ export default function Landing() {
 
   useEffect(() => { if (ready && user) router.replace('/cartons'); }, [ready, user, router]);
 
+  // Retour d'un lien de connexion qui a échoué
+  useEffect(() => {
+    const reason = new URLSearchParams(window.location.search).get('erreur');
+    if (!reason) return;
+    setErr(
+      /verifier|code verifier|both auth code/i.test(reason) ? "Le lien a été ouvert dans un autre navigateur que celui où tu l'as demandé. Redemande un lien et ouvre-le sur ce navigateur-ci."
+      : /expired|invalid|not found|already/i.test(reason) ? 'Ce lien a expiré ou a déjà servi. Redemande-en un nouveau ci-dessous.'
+      : `La connexion a échoué : ${reason}`,
+    );
+    window.history.replaceState(null, '', '/');
+  }, []);
+
   // Vitrine : un album par format, pris parmi ceux qui ont une vraie pochette pour ce format
   const showcase = useMemo(() => {
     const out: { r: (typeof releaseList)[number]; f: Fmt }[] = [];
