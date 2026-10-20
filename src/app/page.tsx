@@ -33,7 +33,15 @@ export default function Landing() {
     setBusy(true); setErr(null);
     const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } });
     setBusy(false);
-    if (error) setErr("L'envoi a échoué. Vérifie l'adresse et réessaie dans une minute.");
+    if (error) {
+      const m = error.message || '';
+      setErr(
+        /not authorized/i.test(m) ? "Cette adresse n'est pas autorisée : le service d'e-mail de test de Supabase n'écrit qu'aux membres du projet. Il faut brancher un service d'envoi (voir le guide)."
+        : /rate limit|too many|seconds/i.test(m) ? "Trop de demandes de lien en peu de temps (limite Supabase). Réessaie dans une heure, ou branche un service d'envoi."
+        : /fetch|network|Failed/i.test(m) ? 'Le site ne joint pas Supabase : vérifie les variables NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY dans Vercel.'
+        : `L'envoi a échoué : ${m}`,
+      );
+    }
     else setSent(email);
   }
 
@@ -49,7 +57,7 @@ export default function Landing() {
             {sent ? (
               <div className="panel stack">
                 <h3>Regarde ta boîte mail</h3>
-                <p className="muted" style={{ margin: 0 }}>Un lien de connexion vient de partir vers <b>{sent}</b>. Ouvre-le sur cet appareil.</p>
+                <p className="muted" style={{ margin: 0 }}>Un lien de connexion vient de partir vers <b>{sent}</b>. Ouvre-le sur cet appareil. Rien au bout de 5 minutes ? Regarde dans les indésirables.</p>
               </div>
             ) : (
               <form className="stack" style={{ maxWidth: 420 }} onSubmit={login}>
