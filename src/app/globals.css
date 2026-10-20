@@ -304,3 +304,17 @@ footer.foot p { margin: 4px 0; max-width: 82ch; }
 
 /* Ombre portée au sol */
 .scene::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 9%; height: 7%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.28), transparent); pointer-events: none; transform: translateZ(-60cqw); }
+
+/* 8-track sur photos : étiquettes posées dans les zones de la photo */
+.tex.fill { object-fit: fill; }
+.eight-label[style] { border-radius: .4cqw; box-shadow: 0 0 .4cqw rgba(0,0,0,.35); }
+.eight-paper { position: absolute; overflow: hidden; border-radius: .3cqw; box-shadow: 0 0 .3cqw rgba(0,0,0,.3); }
+.eight-paper .backprint { padding: 3cqw 2.6cqw; }
+.eight-paper .backprint b { font-size: 3.2cqw; }
+.eight-paper .barcode { right: 2cqw; bottom: 2cqw; height: 3.4cqw; }
+.eight-edge-label { position: absolute; background: #F2EEE4; color: #1a1a1a; display: flex; align-items: center; gap: 1.6cqw; padding: 0 1.6cqw; overflow: hidden; white-space: nowrap; }
+.eight-edge-label b { font: 900 2.4cqw/1 var(--f-title); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; }
+.eight-edge-label span { font: 1.5cqw var(--f-mono); overflow: hidden; text-overflow: ellipsis; }
+.eight-paper { background: #F2EEE4; }
+.eight-paper .backprint { position: absolute; inset: 0; }
+.media-e .face.f-front, .media-e .face.f-back { background: transparent; }

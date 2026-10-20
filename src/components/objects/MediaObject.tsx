@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import { FMT_LONG, hash } from '@/lib/game';
-import { TEXTURES } from '@/lib/textures';
+import { rectStyle, TEXTURES } from '@/lib/textures';
 import type { Fmt, Grade, Release } from '@/lib/types';
 
 /* Objets en vraie 3D CSS : chaque objet est une ou plusieurs boîtes à 6 faces,
@@ -202,24 +202,35 @@ function Cassette({ release, phantom, grade, open }: MediaProps) {
 }
 
 /* ---------------- 8-track : cartouche 100 × 135 × 22 mm ---------------- */
+// eslint-disable-next-line @next/next/no-img-element
+const Tex = ({ src }: { src: string }) => <img className="tex fill" src={src} alt="" draggable={false} />;
+
 function EightTrack({ release, phantom, grade }: MediaProps) {
   const W = 52, H = 70, D = 11.4;
-  const shell = ['#1B1B1B', '#2E2E2E', '#4A3423'][hash('e' + release.master_id) % 3];
+  const shell = TEXTURES.eightFront ? '#4A4D4B' : ['#1B1B1B', '#2E2E2E', '#4A3423'][hash('e' + release.master_id) % 3];
   const body = <div className="eight-plastic" style={{ background: shell }} />;
+  const label = (
+    <div className="eight-label" style={TEXTURES.eightFront ? rectStyle(TEXTURES.eightFrontLabel) : undefined}>
+      <div className="eight-art"><Cover release={release} /></div>
+      <div className="eight-band"><span>STEREO 8</span><b>{release.title}</b></div>
+    </div>
+  );
   return (
     <Part t="translate3d(0,0,0)">
       <Box w={W} h={H} d={D} faces={{
         front: <div className="eight-front" style={{ background: shell }}>
-          {TEXTURES.eightBody
-            // eslint-disable-next-line @next/next/no-img-element
-            ? <img className="tex" src={TEXTURES.eightBody} alt="" draggable={false} />
-            : <div className="eight-ribs" />}
-          <div className="eight-label"><div className="eight-art"><Cover release={release} /></div><div className="eight-band"><span>STEREO 8</span><b>{release.title}</b></div></div>
+          {TEXTURES.eightFront ? <Tex src={TEXTURES.eightFront} /> : <div className="eight-ribs" />}
+          {label}
           <Overlays grade={grade} phantom={phantom} kind="plastic" />
         </div>,
-        back: <div className="eight-back" style={{ background: shell }}><BackPrint release={release} dark /></div>,
+        back: TEXTURES.eightBack
+          ? <div className="eight-back"><Tex src={TEXTURES.eightBack} /><div className="eight-paper" style={rectStyle(TEXTURES.eightBackLabel)}><BackPrint release={release} /></div></div>
+          : <div className="eight-back" style={{ background: shell }}><BackPrint release={release} dark /></div>,
+        bottom: TEXTURES.eightEdge
+          ? <div className="eight-edge"><Tex src={TEXTURES.eightEdge} /><div className="eight-edge-label" style={rectStyle(TEXTURES.eightEdgeLabel)}><b>{release.title}</b><span>{release.artist}</span></div></div>
+          : body,
         top: <div className="eight-top"><i /><em /></div>,
-        left: body, right: body, bottom: body,
+        left: body, right: body,
       }} />
     </Part>
   );
