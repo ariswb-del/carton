@@ -23,7 +23,7 @@ export default function Landing() {
     if (!reason) return;
     setErr(
       /verifier|code verifier|both auth code/i.test(reason) ? "Le lien a été ouvert dans un autre navigateur que celui où tu l'as demandé. Redemande un lien et ouvre-le sur ce navigateur-ci."
-      : /expired|invalid|not found|already/i.test(reason) ? 'Ce lien a expiré ou a déjà servi. Redemande-en un nouveau ci-dessous.'
+      : /expired|invalid|not found|already/i.test(reason) ? 'Ce lien a expiré ou a déjà servi. Demande plutôt un code ci-dessous.'
       : `La connexion a échoué : ${reason}`,
     );
     window.history.replaceState(null, '', '/');
@@ -49,12 +49,27 @@ export default function Landing() {
       const m = error.message || '';
       setErr(
         /not authorized/i.test(m) ? "Cette adresse n'est pas autorisée : le service d'e-mail de test de Supabase n'écrit qu'aux membres du projet. Il faut brancher un service d'envoi (voir le guide)."
-        : /rate limit|too many|seconds/i.test(m) ? "Trop de demandes de lien en peu de temps (limite Supabase). Réessaie dans une heure, ou branche un service d'envoi."
+        : /rate limit|too many|seconds/i.test(m) ? "Trop de demandes de code en peu de temps (limite Supabase). Réessaie dans une heure, ou branche un service d'envoi."
         : /fetch|network|Failed/i.test(m) ? 'Le site ne joint pas Supabase : vérifie les variables NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY dans Vercel.'
         : `L'envoi a échoué : ${m}`,
       );
     }
     else setSent(email);
+  }
+
+  // Code reçu par e-mail, saisi ici : marche sur tout appareil, sans dépendre du lien.
+  async function verify(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const token = String(new FormData(e.currentTarget).get('code')).replace(/\D/g, '');
+    if (!sent || token.length < 6) return setErr('Le code fait au moins 6 chiffres.');
+    setBusy(true); setErr(null);
+    const { error } = await sb.auth.verifyOtp({ email: sent, token, type: 'email' });
+    setBusy(false);
+    if (error) {
+      setErr(/expired|invalid/i.test(error.message) ? 'Code incorrect ou expiré. Vérifie-le, ou redemande un code.' : `La connexion a échoué : ${error.message}`);
+      return;
+    }
+    window.location.assign('/cartons');
   }
 
   return (
@@ -67,16 +82,25 @@ export default function Landing() {
             <h1>Fouille les cartons, monte ta collection</h1>
             <p className="lede">Chaque carton contient cinq disques, avec leur vraie pochette et leur cote Discogs. Garde les pépites, échange les doublons avec tes amis, découvre ce qui tourne dans ta ville. Certains formats n&apos;ont jamais existé : ce sont des pressages fantômes, les pièces les plus convoitées.</p>
             {sent ? (
-              <div className="panel stack">
+              <form className="panel stack" style={{ maxWidth: 420 }} onSubmit={verify}>
                 <h3>Regarde ta boîte mail</h3>
-                <p className="muted" style={{ margin: 0 }}>Un lien de connexion vient de partir vers <b>{sent}</b>. Ouvre-le sur cet appareil. Rien au bout de 5 minutes ? Regarde dans les indésirables.</p>
-              </div>
+                <p className="muted" style={{ margin: 0 }}>Un e-mail vient de partir vers <b>{sent}</b>. Tape ici le code qu&apos;il contient.</p>
+                <div className="field"><label htmlFor="code">Code reçu</label>
+                  <input className="input mono" id="code" name="code" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9 ]*" maxLength={12} required placeholder="123456" style={{ fontSize: 22, letterSpacing: '.2em' }} autoFocus />
+                </div>
+                <div className="row">
+                  <button className="btn primary" disabled={busy}>Entrer dans la brocante</button>
+                  <button type="button" className="btn ghost small" onClick={() => { setSent(null); setErr(null); }}>Changer d&apos;adresse</button>
+                </div>
+                {err && <p className="small" style={{ color: 'var(--danger)', margin: 0 }}>{err}</p>}
+                <p className="muted small" style={{ margin: 0 }}>Rien au bout de 5 minutes ? Regarde dans les indésirables.</p>
+              </form>
             ) : (
               <form className="stack" style={{ maxWidth: 420 }} onSubmit={login}>
                 <div className="field"><label htmlFor="email">Ton e-mail</label><input className="input" id="email" name="email" type="email" required autoComplete="email" placeholder="toi@exemple.fr" /></div>
-                <div className="row"><button className="btn primary" disabled={busy}>Recevoir mon lien de connexion</button></div>
+                <div className="row"><button className="btn primary" disabled={busy}>Recevoir mon code</button></div>
                 {err && <p className="small" style={{ color: 'var(--danger)', margin: 0 }}>{err}</p>}
-                <p className="muted small" style={{ margin: 0 }}>Pas de mot de passe : un lien magique par e-mail suffit.</p>
+                <p className="muted small" style={{ margin: 0 }}>Pas de mot de passe : un code par e-mail suffit.</p>
               </form>
             )}
           </div>

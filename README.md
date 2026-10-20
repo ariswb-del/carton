@@ -63,9 +63,21 @@ Dans Supabase : **Authentication > URL Configuration**.
 - **Site URL** : l'adresse Vercel, par exemple `https://carton-plein.vercel.app`
 - **Redirect URLs** : ajoute `https://carton-plein.vercel.app/auth/callback`
 
-### 6. Tester
+### 6. Afficher le code de connexion dans l'e-mail
 
-Ouvre le site, saisis ton e-mail, clique sur le lien reçu, choisis ton pseudo et ta ville : trois cartons t'attendent.
+Les joueurs se connectent avec un code à 6 chiffres reçu par e-mail. Dans Supabase : **Authentication > Emails > Templates > Magic Link**. Remplace le contenu du message par :
+
+```html
+<h2>Ton code Carton Plein</h2>
+<p style="font-size:28px;letter-spacing:6px"><b>{{ .Token }}</b></p>
+<p>Tape ce code sur le site. Il expire dans une heure.</p>
+```
+
+Puis **Save**.
+
+### 7. Tester
+
+Ouvre le site, saisis ton e-mail, tape le code reçu, choisis ton pseudo et ta ville : trois cartons t'attendent.
 
 ---
 
