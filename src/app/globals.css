@@ -318,3 +318,10 @@ footer.foot p { margin: 4px 0; max-width: 82ch; }
 .eight-paper { background: #F2EEE4; }
 .eight-paper .backprint { position: absolute; inset: 0; }
 .media-e .face.f-front, .media-e .face.f-back { background: transparent; }
+
+/* Rendus WebGL (8-track) */
+.snap-holder { position: absolute; inset: 0; }
+.snap { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; -webkit-user-drag: none; }
+.gl-host { position: relative; width: 100%; max-width: 440px; aspect-ratio: 1; touch-action: none; cursor: grab; }
+.gl-host canvas { display: block; }
+.gl-wait { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 13px; text-align: center; padding: 20px; }

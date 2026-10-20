@@ -3,6 +3,7 @@
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import { FMT_LONG, hash } from '@/lib/game';
 import { rectStyle, TEXTURES } from '@/lib/textures';
+import { EightSnapshot } from './Eight3D';
 import type { Fmt, Grade, Release } from '@/lib/types';
 
 /* Objets en vraie 3D CSS : chaque objet est une ou plusieurs boîtes à 6 faces,
@@ -242,13 +243,16 @@ export default function MediaObject(props: MediaProps) {
   const { format, release, pose, animate, open } = props;
   const p = pose ?? DEFAULT_POSE[format];
   const Comp = { v: Vinyl, c: CD, k: Cassette, e: EightTrack }[format];
+  const css = (
+    <div className="scene">
+      <div className={`rig ${animate ? 'animate' : ''}`} style={{ transform: `rotateX(${p.x}deg) rotateY(${p.y}deg)` }}>
+        <Comp {...props} />
+      </div>
+    </div>
+  );
   return (
     <div className={`media media-${format} ${open ? 'is-open' : ''}`} role="img" aria-label={`${FMT_LONG[format]} : ${release.title}, ${release.artist}`}>
-      <div className="scene">
-        <div className={`rig ${animate ? 'animate' : ''}`} style={{ transform: `rotateX(${p.x}deg) rotateY(${p.y}deg)` }}>
-          <Comp {...props} />
-        </div>
-      </div>
+      {format === 'e' && !pose ? <EightSnapshot release={release} grade={props.grade} phantom={props.phantom} fallback={css} /> : css}
     </div>
   );
 }
