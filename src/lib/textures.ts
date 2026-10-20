@@ -11,7 +11,7 @@ export const TEXTURES = {
 
   // 8-track : façade (où se colle la pochette), dos (étiquette de pistes) et tranche (étiquette de rangement)
   eightFront: '/textures/8track-front.webp' as string | null,
-  eightFrontLabel: [11.5, 20.4, 88.5, 79] as Rect,
+  eightFrontLabel: [11.3, 20.6, 88.9, 80.1] as Rect,
   eightBack: '/textures/8track-back.webp' as string | null,
   eightBackLabel: [11, 31.5, 89.5, 99] as Rect,      // recouvre entièrement l'étiquette d'origine de la photo
   eightEdge: '/textures/8track-edge.jpg' as string | null,

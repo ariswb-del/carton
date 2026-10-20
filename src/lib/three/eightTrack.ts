@@ -2,32 +2,55 @@ import * as THREE from 'three';
 import { TEXTURES, type Rect } from '@/lib/textures';
 import type { Grade, Release } from '@/lib/types';
 import { hash } from '@/lib/game';
+import { EIGHT_OUTLINE } from './eightOutline';
 
 /* Cartouche 8-track en vraie 3D, cotes réelles en millimètres (100 × 135 × 22).
    Silhouette d'après la photo de façade : coins arrondis, encoche en U du galet presseur en haut à droite. */
 
-export const W = 100, H = 135, D = 22;
-const R = 3.2;                                  // rayon des coins
-const NOTCH: [number, number, number] = [0.714, 0.832, 4.2]; // encoche : début et fin en % de la largeur, profondeur en mm
+export const W = 100, H = 134, D = 22;
+const NOTCH: [number, number, number] = [0.712, 0.832, 4.2]; // encoche du galet : début et fin en % de la largeur, profondeur en mm
 const PLASTIC = '#4A4D4B';
 
-/** Silhouette, dans un repère centré (x vers la droite, y vers le haut). */
-function outline(path: { moveTo(x: number, y: number): void; lineTo(x: number, y: number): void; quadraticCurveTo(cx: number, cy: number, x: number, y: number): void }, sx = 1, sy = 1, ox = 0, oy = 0) {
-  const P = (x: number, y: number): [number, number] => [ox + x * sx, oy + y * sy];
-  const hw = W / 2, hh = H / 2;
-  const n0 = -hw + NOTCH[0] * W, n1 = -hw + NOTCH[1] * W, nd = NOTCH[2], nc = (n0 + n1) / 2;
-  path.moveTo(...P(-hw + R, -hh));
-  path.lineTo(...P(hw - R, -hh));
-  path.quadraticCurveTo(...P(hw, -hh), ...P(hw, -hh + R));
-  path.lineTo(...P(hw, hh - R));
-  path.quadraticCurveTo(...P(hw, hh), ...P(hw - R, hh));
-  path.lineTo(...P(n1, hh));
-  path.quadraticCurveTo(...P(n1, hh - nd), ...P(nc, hh - nd));
-  path.quadraticCurveTo(...P(n0, hh - nd), ...P(n0, hh));
-  path.lineTo(...P(-hw + R, hh));
-  path.quadraticCurveTo(...P(-hw, hh), ...P(-hw, hh - R));
-  path.lineTo(...P(-hw, -hh + R));
-  path.quadraticCurveTo(...P(-hw, -hh), ...P(-hw + R, -hh));
+/** Contour : silhouette détourée de la photo, avec l'encoche en U du galet creusée dans le bord supérieur. */
+function contour(): [number, number][] {
+  const n0 = NOTCH[0], n1 = NOTCH[1], depth = NOTCH[2] / H, top = 0.97;
+  const pts = EIGHT_OUTLINE, out: [number, number][] = [];
+  let done = false;
+  for (let i = 0; i < pts.length; i++) {
+    const p = pts[i], q = pts[(i + 1) % pts.length];
+    const skip = done && p[1] > top && p[0] > n0 && p[0] < n1;
+    if (!skip) out.push(p);
+    // le bord supérieur se parcourt de droite à gauche : à la traversée de n1, on creuse le U jusqu'à n0
+    if (!done && p[1] > top && q[1] > top && p[0] >= n1 && q[0] < n1) {
+      const yTop = Math.max(p[1], q[1]);
+      out.push([n1, yTop]);
+      for (let k = 1; k < 14; k++) {
+        const t = k / 14;
+        out.push([n1 - (n1 - n0) * t, yTop - depth * Math.sin(Math.PI * t)]);
+      }
+      out.push([n0, yTop]);
+      done = true;
+    }
+  }
+  return out;
+}
+
+type PathLike = { moveTo(x: number, y: number): void; lineTo(x: number, y: number): void };
+let CONTOUR: [number, number][] | null = null;
+
+/** Trace la silhouette, centrée sur l'origine (x vers la droite, y vers le haut), avec échelle et décalage. */
+function outline(path: PathLike, sx = 1, sy = 1, ox = 0, oy = 0) {
+  CONTOUR ??= contour();
+  CONTOUR.forEach(([x, y], i) => {
+    const px = ox + (x - 0.5) * W * sx, py = oy + (y - 0.5) * H * sy;
+    if (i === 0) path.moveTo(px, py); else path.lineTo(px, py);
+  });
+}
+
+/** Largeur du plat de la tranche du bas (pour l'étiquette de rangement). */
+function bottomFlat() {
+  const low = EIGHT_OUTLINE.filter(([, y]) => y < 0.004).map(([x]) => x);
+  return low.length >= 2 ? { x0: Math.min(...low), x1: Math.max(...low) } : { x0: 0.08, x1: 0.92 };
 }
 
 const loadImage = (src: string) => new Promise<HTMLImageElement | null>(res => {
@@ -185,8 +208,9 @@ export async function buildEightTrack(release: Release, opts: { grade?: Grade; p
   }
 
   // Tranche du bas : étiquette de rangement
-  const em = new THREE.Mesh(new THREE.PlaneGeometry(W - 2 * R, D - 2 * bevel), new THREE.MeshStandardMaterial({ map: edge, roughness: 0.6 }));
-  em.rotation.x = Math.PI / 2; em.position.y = -H / 2 - 0.06; g.add(em);
+  const bf = bottomFlat();
+  const em = new THREE.Mesh(new THREE.PlaneGeometry((bf.x1 - bf.x0) * W * 0.96, D - 2 * bevel), new THREE.MeshStandardMaterial({ map: edge, roughness: 0.6 }));
+  em.rotation.x = Math.PI / 2; em.position.set(((bf.x0 + bf.x1) / 2 - 0.5) * W, -H / 2 - 0.06, 0); g.add(em);
 
   // Fente de lecture en haut : bande magnétique visible
   const slot = new THREE.Mesh(new THREE.BoxGeometry(56, 0.5, D - 7), new THREE.MeshStandardMaterial({ color: '#141414', roughness: 0.9 }));
@@ -201,10 +225,16 @@ export async function buildEightTrack(release: Release, opts: { grade?: Grade; p
 
   // Rainures de préhension sur les flancs, en bas
   const rib = new THREE.BoxGeometry(0.9, 1.1, D - 5);
+  const sideAt = (yn: number, side: 'l' | 'r') => {
+    const xs = CONTOUR!.filter(([, y]) => Math.abs(y - yn) < 0.02).map(([x]) => x);
+    if (!xs.length) return side === 'l' ? 0 : 1;
+    return side === 'l' ? Math.min(...xs) : Math.max(...xs);
+  };
   for (let i = 0; i < 9; i++) {
-    for (const s of [-1, 1]) {
+    const y = -H / 2 + 9 + i * 2.3, yn = y / H + 0.5;
+    for (const side of ['l', 'r'] as const) {
       const m = new THREE.Mesh(rib, plastic);
-      m.position.set(s * (W / 2 + 0.35), -H / 2 + 5 + i * 2.3, 0);
+      m.position.set((sideAt(yn, side) - 0.5) * W + (side === 'l' ? -0.35 : 0.35), y, 0);
       g.add(m);
     }
   }
