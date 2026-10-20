@@ -42,7 +42,8 @@ export default function Landing() {
         const m = error.message || '';
         return setErr(
           /already registered|already exists/i.test(m) ? 'Un compte existe déjà avec cet e-mail. Passe sur « Se connecter ».'
-          : /password/i.test(m) ? 'Mot de passe trop court : 8 caractères minimum.'
+          : /at least \d+ characters|too short/i.test(m) ? 'Mot de passe trop court : 8 caractères minimum.'
+          : /password/i.test(m) ? 'Mot de passe trop faible : mélange minuscules, majuscules et chiffres.'
           : /fetch|network|Failed/i.test(m) ? 'Le site ne joint pas Supabase : vérifie les variables NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY dans Vercel.'
           : `Inscription impossible : ${m}`,
         );
@@ -81,6 +82,7 @@ export default function Landing() {
             <form className="stack" style={{ maxWidth: 420 }} onSubmit={submit}>
               <div className="field"><label htmlFor="email">E-mail</label><input className="input" id="email" name="email" type="email" required autoComplete="email" placeholder="toi@exemple.fr" /></div>
               <div className="field"><label htmlFor="password">Mot de passe</label><input className="input" id="password" name="password" type="password" required minLength={8} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} placeholder="8 caractères minimum" /></div>
+              {mode === 'signup' && <p className="muted small" style={{ margin: 0 }}>Au moins 8 caractères, avec des minuscules, des majuscules et des chiffres.</p>}
               <div className="row"><button className="btn primary" disabled={busy}>{mode === 'signup' ? 'Recevoir mes 3 cartons' : 'Entrer dans la brocante'}</button></div>
               {err && <p className="small" style={{ color: 'var(--danger)', margin: 0 }}>{err}</p>}
               {mode === 'login' && <p className="muted small" style={{ margin: 0 }}>Mot de passe oublié ? Écris à l&apos;organisateur du jeu, il peut le réinitialiser.</p>}
