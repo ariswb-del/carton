@@ -56,34 +56,31 @@ Compte environ 45 minutes la première fois, dont 25 à 30 minutes d'attente pen
 
 3. **Deploy**. Note l'adresse du site (par exemple `carton-plein.vercel.app`).
 
-### 5. Brancher la connexion par e-mail
+### 5. Connexion sans e-mail
 
-Dans Supabase : **Authentication > URL Configuration**.
+Les joueurs créent un compte avec e-mail et mot de passe, et le site n'envoie aucun e-mail. Dans Supabase : **Authentication > Sign In / Providers > Email**, désactive **Confirm email**, puis **Save**.
 
-- **Site URL** : l'adresse Vercel, par exemple `https://carton-plein.vercel.app`
-- **Redirect URLs** : ajoute `https://carton-plein.vercel.app/auth/callback`
+Dans **Authentication > URL Configuration**, mets la **Site URL** sur l'adresse Vercel (par exemple `https://carton-neon.vercel.app`, avec `https://`).
 
-### 6. Afficher le code de connexion dans l'e-mail
+Mot de passe oublié : le joueur te le signale, et tu le réinitialises dans **SQL Editor** (sa collection est conservée) :
 
-Les joueurs se connectent avec un code à 6 chiffres reçu par e-mail. Dans Supabase : **Authentication > Emails > Templates > Magic Link**. Remplace le contenu du message par :
-
-```html
-<h2>Ton code Carton Plein</h2>
-<p style="font-size:28px;letter-spacing:6px"><b>{{ .Token }}</b></p>
-<p>Tape ce code sur le site. Il expire dans une heure.</p>
+```sql
+update auth.users
+set encrypted_password = extensions.crypt('nouveau-mot-de-passe', extensions.gen_salt('bf'))
+where email = 'adresse@du-joueur.fr';
 ```
 
-Puis **Save**.
+Communique-lui ensuite le nouveau mot de passe.
 
-### 7. Tester
+### 6. Tester
 
-Ouvre le site, saisis ton e-mail, tape le code reçu, choisis ton pseudo et ta ville : trois cartons t'attendent.
+Ouvre le site, crée ton compte, choisis ton pseudo et ta ville : trois cartons t'attendent.
 
 ---
 
 ## Points de vigilance
 
-- **E-mails de connexion (obligatoire).** Le service d'e-mail intégré à Supabase n'écrit qu'aux membres de ton équipe Supabase, et 2 fois par heure au maximum. Pour que d'autres joueurs puissent se connecter, branche un service d'envoi (Brevo, offre gratuite de 300 e-mails par jour) dans **Authentication > Emails > SMTP Settings**.
+- **Aucun e-mail envoyé.** La confirmation d'adresse est désactivée : une adresse mal tapée crée quand même un compte, et il n'y a pas de « mot de passe oublié » automatique. Si un jour tu veux l'un ou l'autre, il faudra brancher un service d'envoi (Brevo, avec un nom de domaine).
 - **Mise en pause Supabase.** Un projet gratuit est mis en pause après une semaine d'inactivité. La synchronisation toutes les 6 heures sollicite la base, ce qui devrait suffire à la garder active ; si le site affiche une erreur après une longue pause, relance le projet depuis le tableau de bord Supabase.
 - **Conditions Discogs.** Les pochettes et les prix du marché sont des « données restreintes » : affichage autorisé pour faire tourner une application, mais pas d'usage commercial, pas de copie, et pas de données affichées plus de 6 heures après leur mise à jour chez Discogs (d'où la synchronisation toutes les 6 heures). Le pied de page porte la mention « Données fournies par Discogs » et l'avis de non-affiliation, comme l'exigent leurs conditions.
 - **Droits sur les pochettes.** Elles appartiennent aux labels et aux artistes. Tant que le jeu reste gratuit et non commercial, l'affichage via l'API Discogs suit l'usage courant des applis de collection. Toute monétisation (cartons payants, publicité) demande un avis juridique et sans doute un accord avec Discogs ou les ayants droit.
