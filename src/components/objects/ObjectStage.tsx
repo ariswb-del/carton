@@ -2,11 +2,11 @@
 
 import { useRef, useState } from 'react';
 import MediaObject, { DEFAULT_POSE, type MediaProps } from './MediaObject';
-import { EightViewer } from './Eight3D';
+import { IS_3D, Viewer3D } from './Media3D';
 
 /** L'objet « en main » : on le fait tourner librement au doigt ou à la souris, on l'ouvre, on le retourne. */
 export default function ObjectStage(props: Omit<MediaProps, 'open' | 'pose' | 'animate'>) {
-  if (props.format === 'e') return <EightViewer release={props.release} grade={props.grade} phantom={props.phantom} />;
+  if (IS_3D(props.format)) return <Viewer3D format={props.format} release={props.release} grade={props.grade} phantom={props.phantom} />;
   return <CssStage {...props} />;
 }
 

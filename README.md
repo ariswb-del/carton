@@ -29,6 +29,8 @@ Compte environ 45 minutes la première fois, dont 25 à 30 minutes d'attente pen
    - **anon public** (clé publique, elle ira dans Vercel)
    - **service_role** (clé secrète, elle n'ira que dans GitHub, jamais dans Vercel)
 
+   Puis, dans une nouvelle requête, colle et exécute aussi `supabase/migrations/002_tracklist.sql` (liste des titres pour les K7).
+
 ### 3. GitHub
 
 1. Crée un dépôt **public** nommé `carton-plein`. Public, parce que les automatisations y sont gratuites et illimitées ; en privé, elles sont plafonnées à 2 000 minutes par mois, et la synchronisation en consomme environ 1 900. Aucune clé n'est dans le code, elles restent dans les « secrets » du dépôt.

@@ -53,7 +53,7 @@ function bottomFlat() {
   return low.length >= 2 ? { x0: Math.min(...low), x1: Math.max(...low) } : { x0: 0.08, x1: 0.92 };
 }
 
-const loadImage = (src: string) => new Promise<HTMLImageElement | null>(res => {
+export const loadImage = (src: string) => new Promise<HTMLImageElement | null>(res => {
   const im = new Image();
   im.decoding = 'async';
   im.onload = () => res(im);
@@ -67,7 +67,7 @@ function rectPx([l, t, r, b]: Rect, w: number, h: number) {
   return { x: (l / 100) * w, y: (t / 100) * h, w: ((r - l) / 100) * w, h: ((b - t) / 100) * h };
 }
 
-function coverOrFallback(ctx: CanvasRenderingContext2D, cover: HTMLImageElement | null, release: Release, x: number, y: number, w: number, h: number) {
+export function coverOrFallback(ctx: CanvasRenderingContext2D, cover: HTMLImageElement | null, release: Release, x: number, y: number, w: number, h: number) {
   if (cover) {
     const s = Math.max(w / cover.width, h / cover.height);
     const cw = w / s, ch = h / s;
@@ -82,7 +82,7 @@ function coverOrFallback(ctx: CanvasRenderingContext2D, cover: HTMLImageElement 
   }
 }
 
-function scratches(ctx: CanvasRenderingContext2D, grade: Grade | undefined, seed: number, x: number, y: number, w: number, h: number) {
+export function scratches(ctx: CanvasRenderingContext2D, grade: Grade | undefined, seed: number, x: number, y: number, w: number, h: number) {
   const n = grade === 'G+' ? 46 : grade === 'VG' ? 20 : grade === 'VG+' ? 7 : 0;
   let s = seed || 1;
   const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);

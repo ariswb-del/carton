@@ -9,8 +9,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 function lights(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.75;
   pmrem.dispose();
-  const key = new THREE.DirectionalLight('#ffffff', 1.6); key.position.set(-80, 140, 180); scene.add(key);
+  const key = new THREE.DirectionalLight('#ffffff', 1.25); key.position.set(-80, 140, 180); scene.add(key);
   const rim = new THREE.DirectionalLight('#ffffff', 0.7); rim.position.set(120, 60, -160); scene.add(rim);
   scene.add(new THREE.HemisphereLight('#ffffff', '#3a3a3a', 0.5));
 }
@@ -38,7 +39,7 @@ export function snapshot(key: string, build: () => Promise<THREE.Group>, pose: {
         shared = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
         shared.setPixelRatio(1);
         shared.outputColorSpace = THREE.SRGBColorSpace;
-        shared.toneMapping = THREE.ACESFilmicToneMapping;
+        shared.toneMapping = THREE.NeutralToneMapping;
       }
       shared.setSize(size, size, false);
       const scene = new THREE.Scene();
@@ -63,13 +64,13 @@ export function snapshot(key: string, build: () => Promise<THREE.Group>, pose: {
   return job;
 }
 
-export type Viewer = { flip: () => void; reset: () => void; dispose: () => void };
+export type Viewer = { flip: () => void; reset: () => void; setOpen: (o: boolean) => void; dispose: () => void };
 
 export async function mountViewer(el: HTMLElement, build: () => Promise<THREE.Group>, pose: { x: number; y: number }): Promise<Viewer> {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMapping = THREE.NeutralToneMapping;
   el.appendChild(renderer.domElement);
   renderer.domElement.style.touchAction = 'none';
 
@@ -102,6 +103,7 @@ export async function mountViewer(el: HTMLElement, build: () => Promise<THREE.Gr
   let target = 0, raf = 0;
   const tick = () => {
     pivot.rotation.y += (target - pivot.rotation.y) * 0.12;
+    obj.userData.update?.();
     controls.update();
     renderer.render(scene, cam);
     raf = requestAnimationFrame(tick);
@@ -110,6 +112,7 @@ export async function mountViewer(el: HTMLElement, build: () => Promise<THREE.Gr
 
   return {
     flip: () => { target += Math.PI; },
+    setOpen: (o: boolean) => { obj.userData.setOpen?.(o); },
     reset: () => { target = Math.round(target / (2 * Math.PI)) * 2 * Math.PI; controls.reset(); },
     dispose: () => {
       cancelAnimationFrame(raf); ro.disconnect(); controls.dispose();

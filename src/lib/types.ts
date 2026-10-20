@@ -33,6 +33,7 @@ export type Release = {
   fmt_counts: Partial<Record<Fmt, number>>;
   tiers: Partial<Record<Fmt, number>>;
   covers: Partial<Record<Fmt | 'main', CoverInfo>>;
+  tracklist?: { p: string; t: string }[];
   refreshed_at: string | null;
 };
 

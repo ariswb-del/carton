@@ -7,7 +7,7 @@ export type Rect = [number, number, number, number];
 export const TEXTURES = {
   vinylDisc: null as string | null,   // disque vinyle vierge vu de face, étiquette centrale vide (carré)
   cdTray: null as string | null,      // fond de boîtier CD ouvert, support de disque (142 × 125)
-  k7Shell: null as string | null,     // cassette vierge vue de face, à plat, à l'horizontale (100 × 64)
+  k7Shell: '/textures/k7-shell.webp' as string | null, // cassette vierge redressée, texte d'origine effacé (100,4 × 63,8)
 
   // 8-track : façade (où se colle la pochette), dos (étiquette de pistes) et tranche (étiquette de rangement)
   eightFront: '/textures/8track-front.webp' as string | null,

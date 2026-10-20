@@ -3,7 +3,7 @@
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import { FMT_LONG, hash } from '@/lib/game';
 import { rectStyle, TEXTURES } from '@/lib/textures';
-import { EightSnapshot } from './Eight3D';
+import { IS_3D, Snapshot3D } from './Media3D';
 import type { Fmt, Grade, Release } from '@/lib/types';
 
 /* Objets en vraie 3D CSS : chaque objet est une ou plusieurs boîtes à 6 faces,
@@ -252,7 +252,7 @@ export default function MediaObject(props: MediaProps) {
   );
   return (
     <div className={`media media-${format} ${open ? 'is-open' : ''}`} role="img" aria-label={`${FMT_LONG[format]} : ${release.title}, ${release.artist}`}>
-      {format === 'e' && !pose ? <EightSnapshot release={release} grade={props.grade} phantom={props.phantom} fallback={css} /> : css}
+      {IS_3D(format) && !pose ? <Snapshot3D format={format} release={release} grade={props.grade} phantom={props.phantom} fallback={css} /> : css}
     </div>
   );
 }

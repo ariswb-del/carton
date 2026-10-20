@@ -110,6 +110,7 @@ async function fetchAlbum(seed, previous) {
     for_sale: m.num_for_sale || 0,
     uri: m.uri ? new URL(m.uri).pathname : `/master/${id}`,
     gem: !!seed.gem,
+    tracklist: (m.tracklist || []).filter(t => (t.type_ || 'track') === 'track' && t.title).slice(0, 40).map(t => ({ p: t.position || '', t: t.title })),
     fmt_counts,
     covers,
     active: true,
@@ -126,7 +127,10 @@ async function main() {
   try { await discogs('/masters/24047'); }
   catch (e) { fail(`Discogs refuse la connexion (${e.message}). Vérifie DISCOGS_KEY et DISCOGS_SECRET (Consumer Key et Consumer Secret de ton application Discogs).`); }
 
+  let hasTracklist = true;
   if (supabase) {
+    const probe = await supabase.from('releases').select('tracklist').limit(1);
+    if (probe.error) { hasTracklist = false; console.log('::warning::Colonne « tracklist » absente : exécute supabase/migrations/002_tracklist.sql dans Supabase pour afficher les titres sur les K7.'); }
     const { data, error } = await supabase.from('releases').select('*');
     if (error) {
       const hint = /relation|does not exist|schema cache/i.test(error.message)
@@ -159,7 +163,7 @@ async function main() {
   rows.forEach(r => all.set(r.master_id, r));
   const tiers = computeTiers([...all.values()]);
   const fresh = rows.filter(r => r.refreshed_at && Date.now() - Date.parse(r.refreshed_at) < 3600e3)
-    .map(r => ({ ...r, tiers: tiers[r.master_id] }));
+    .map(r => { const row = { ...r, tiers: tiers[r.master_id] }; if (!hasTracklist) delete row.tracklist; return row; });
 
   if (DRY) {
     console.log(JSON.stringify(fresh.slice(0, 2), null, 2));
